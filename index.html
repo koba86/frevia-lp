@@ -589,6 +589,13 @@ input,select,textarea{font-family:inherit}
 .btn-submit:hover{opacity:.9}
 .modal .note{font-size:.75rem;color:#5c5c72;margin-top:1rem;line-height:1.6}
 
+/* ===== LEGAL MODAL CONTENT ===== */
+#legalContent h2{font-size:1.25rem;font-weight:700;margin-bottom:1.5rem}
+#legalContent h3{font-size:1rem;font-weight:700;margin:1.5rem 0 .5rem;color:#f0f0f5}
+#legalContent p{font-size:.88rem;color:#9595a8;line-height:1.8;margin-bottom:.75rem}
+#legalContent ul{list-style:disc;padding-left:1.25rem;margin-bottom:.75rem}
+#legalContent li{font-size:.88rem;color:#9595a8;line-height:1.8;margin-bottom:.25rem}
+
 /* ===== FOOTER ===== */
 footer{
   padding:3rem 0 2rem;
@@ -995,10 +1002,10 @@ footer .copy{font-size:.72rem;color:#5c5c72}
     <div class="logo">FREVIA</div>
     <p class="address">〒150-0021 東京都渋谷区恵比寿西2丁目4番8号 ウィンド恵比寿ビル8F</p>
     <div class="links">
-      <a href="#">プライバシーポリシー</a>
-      <a href="#">利用規約</a>
-      <a href="#">特定商取引法に基づく表記</a>
-      <a href="#">お問い合わせ</a>
+      <a href="#" onclick="openLegalModal('privacy');return false">プライバシーポリシー</a>
+      <a href="#" onclick="openLegalModal('terms');return false">利用規約</a>
+      <a href="#trust">運営者情報</a>
+      <a href="https://lin.ee/xPJ8VD8">お問い合わせ</a>
     </div>
     <p class="copy outfit">&copy; 2026 Frevia. All rights reserved.</p>
   </div>
@@ -1056,7 +1063,96 @@ footer .copy{font-size:.72rem;color:#5c5c72}
   </div>
 </div>
 
+<!-- ===== LEGAL MODAL ===== -->
+<div class="modal-overlay" id="legalOverlay" onclick="closeLegalOutside(event)">
+  <div class="modal" style="max-width:640px">
+    <button class="modal-close" onclick="closeLegalModal()">&times;</button>
+    <div id="legalContent"></div>
+  </div>
+</div>
+
 <script>
+/* ===== LEGAL MODAL ===== */
+const legalOverlay=document.getElementById('legalOverlay');
+const legalContent=document.getElementById('legalContent');
+const legalData={
+privacy:`<h2>プライバシーポリシー</h2>
+<p style="font-size:.82rem;color:#5c5c72;margin-bottom:1.5rem">最終更新日：2026年3月23日</p>
+<p>配信事務所Frevia（以下「当事務所」）は、応募者の皆さまからお預かりする個人情報を大切に取り扱い、以下の方針に基づいて適切に管理いたします。</p>
+
+<h3>1. 収集する個人情報</h3>
+<p>当事務所の採用応募フォームでは、以下の情報をお預かりします。</p>
+<ul>
+<li>お名前</li>
+<li>年齢</li>
+<li>メールアドレス</li>
+<li>性別（任意）</li>
+<li>配信経験（任意）</li>
+<li>TikTok URL（任意）</li>
+<li>自己PR（任意）</li>
+</ul>
+
+<h3>2. 利用目的</h3>
+<p>お預かりした個人情報は、以下の目的にのみ使用いたします。</p>
+<ul>
+<li>ライバー採用の選考・面談のご連絡</li>
+<li>採用に関するご案内・ご連絡</li>
+</ul>
+<p>上記以外の目的（営業活動・広告配信など）には一切使用いたしません。</p>
+
+<h3>3. 第三者への提供</h3>
+<p>法令に基づく場合を除き、応募者の同意なく個人情報を第三者に提供することはありません。</p>
+
+<h3>4. 個人情報の管理</h3>
+<p>当事務所は、個人情報への不正アクセス・紛失・漏洩等を防止するため、適切な安全管理措置を講じます。</p>
+
+<h3>5. 個人情報の保管と削除</h3>
+<p>採用選考が終了し、採用に至らなかった場合は、選考終了後速やかに個人情報を削除いたします。</p>
+
+<h3>6. 開示・訂正・削除の請求</h3>
+<p>ご自身の個人情報について、開示・訂正・削除をご希望の場合は、下記の連絡先までお申し出ください。本人確認のうえ、速やかに対応いたします。</p>
+
+<h3>7. お問い合わせ先</h3>
+<p>配信事務所Frevia<br>メール：info@frevia-agency.jp</p>`,
+
+terms:`<h2>利用規約</h2>
+<p style="font-size:.82rem;color:#5c5c72;margin-bottom:1.5rem">最終更新日：2026年3月23日</p>
+<p>この利用規約（以下「本規約」）は、配信事務所Frevia（以下「当事務所」）が運営する採用ページ（以下「本サイト」）の利用に関する条件を定めるものです。本サイトをご利用いただいた時点で、本規約に同意いただいたものとみなします。</p>
+
+<h3>1. 本サイトの目的</h3>
+<p>本サイトは、当事務所が運営するTikTok LIVEライバー育成事業への応募受付を目的としています。</p>
+
+<h3>2. 応募にあたって</h3>
+<ul>
+<li>応募にあたり、虚偽の情報を入力しないでください。</li>
+<li>応募は本人のみ行ってください（他者になりすましての応募はお断りします）。</li>
+<li>18歳未満の方は応募できません。</li>
+</ul>
+
+<h3>3. 知的財産権</h3>
+<p>本サイトに掲載されているテキスト・画像・デザイン等のコンテンツの著作権は、当事務所または正当な権利を持つ第三者に帰属します。無断での転載・複製はお断りします。</p>
+
+<h3>4. 免責事項</h3>
+<ul>
+<li>当事務所は、本サイトの情報の正確性・最新性について可能な限り努力いたしますが、その完全性を保証するものではありません。</li>
+<li>通信環境やシステム障害等により本サイトが利用できない場合、当事務所は責任を負いかねます。</li>
+<li>本サイトからリンクされた外部サイトの内容について、当事務所は責任を負いません。</li>
+</ul>
+
+<h3>5. 規約の変更</h3>
+<p>当事務所は、必要に応じて本規約を変更することがあります。変更後の規約は、本サイト上に掲載した時点で効力を生じるものとします。</p>
+
+<h3>6. お問い合わせ先</h3>
+<p>配信事務所Frevia<br>メール：info@frevia-agency.jp</p>`
+};
+function openLegalModal(type){
+  legalContent.innerHTML=legalData[type];
+  legalOverlay.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLegalModal(){legalOverlay.classList.remove('open');document.body.style.overflow=''}
+function closeLegalOutside(e){if(e.target===legalOverlay)closeLegalModal()}
+
 /* ===== PARTICLES ===== */
 (function(){
   const canvas=document.getElementById('particles-canvas');
