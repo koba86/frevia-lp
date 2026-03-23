@@ -194,6 +194,45 @@ input,select,textarea{font-family:inherit}
   100%{opacity:1;transform:scaleY(1)}
 }
 
+/* ===== HERO SLIDER ===== */
+.hero-slider{
+  position:relative;z-index:1;
+  width:100vw;
+  align-self:stretch;
+  overflow:hidden;
+  margin:2rem 0 2.5rem;
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(to right,transparent,#000 8%,#000 92%,transparent);
+}
+.hero-slider-track{
+  display:flex;gap:1.5rem;
+  animation:hero-slide 30s linear infinite;
+  width:max-content;
+}
+.hero-slider-track:hover{animation-play-state:paused}
+@keyframes hero-slide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.hero-slide-item{
+  flex-shrink:0;
+  text-align:center;
+}
+.hero-slide-img{
+  width:180px;height:320px;
+  border-radius:16px;
+  object-fit:cover;
+  display:block;
+  box-shadow:0 4px 24px rgba(0,0,0,.4);
+}
+.hero-slide-name{
+  margin-top:.5rem;
+  font-size:.75rem;
+  color:#9595a8;
+  white-space:nowrap;
+}
+@media(min-width:860px){
+  .hero-slide-img{width:220px;height:390px}
+  .hero-slide-name{font-size:.8rem}
+}
+
 /* ===== NEWS TICKER ===== */
 .news-section{padding:0;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.04)}
 .ticker-wrap{
@@ -602,6 +641,21 @@ footer .copy{font-size:.72rem;color:#5c5c72}
     <div class="hero-badge fade-in"><span class="dot"></span>2026年度 ライバー募集中</div>
     <h1 class="hero-main-copy fade-in delay-1">あなたの<span class="grad-text">「好き」</span>が、<br>誰かの<span class="grad-text">推し</span>になる。</h1>
     <p class="hero-sub-copy fade-in delay-2">配信事務所Freviaは、TikTok LIVEに特化した次世代エンターテインメント・エージェンシーです。未経験でも、スマホ1台からプロのライバーへ。</p>
+  </div>
+  <div class="hero-slider fade-in delay-2">
+    <div class="hero-slider-track">
+      <div class="hero-slide-item"><img class="hero-slide-img" src="images/slide-1.jpg" alt="愛ぺっぺ"><div class="hero-slide-name">愛ぺっぺ☀️🌴</div></div>
+      <div class="hero-slide-item"><img class="hero-slide-img" src="images/slide-2.jpg" alt="Ravi"><div class="hero-slide-name">Ravi🌶️🧚‍♀️つまみ食いプロ</div></div>
+      <div class="hero-slide-item"><img class="hero-slide-img" src="images/slide-3.jpg" alt="Misa"><div class="hero-slide-name">Misa🥷🍙</div></div>
+      <div class="hero-slide-item"><img class="hero-slide-img" src="images/slide-4.jpg" alt="かず"><div class="hero-slide-name">かず🚗♨️❣️</div></div>
+      <!-- duplicated for seamless loop -->
+      <div class="hero-slide-item"><img class="hero-slide-img" src="images/slide-1.jpg" alt="愛ぺっぺ"><div class="hero-slide-name">愛ぺっぺ☀️🌴</div></div>
+      <div class="hero-slide-item"><img class="hero-slide-img" src="images/slide-2.jpg" alt="Ravi"><div class="hero-slide-name">Ravi🌶️🧚‍♀️つまみ食いプロ</div></div>
+      <div class="hero-slide-item"><img class="hero-slide-img" src="images/slide-3.jpg" alt="Misa"><div class="hero-slide-name">Misa🥷🍙</div></div>
+      <div class="hero-slide-item"><img class="hero-slide-img" src="images/slide-4.jpg" alt="かず"><div class="hero-slide-name">かず🚗♨️❣️</div></div>
+    </div>
+  </div>
+  <div class="hero-content" style="padding-top:0">
     <div class="hero-cta-group fade-in delay-3">
       <a href="https://lin.ee/xPJ8VD8" class="btn-line">
         <svg class="line-icon" viewBox="0 0 24 24" width="22" height="22"><path fill="#06C755" d="M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/><path fill="#fff" d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629"/></svg>
