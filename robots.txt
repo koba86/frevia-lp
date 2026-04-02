@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://recruit.frevia-agency.jp/sitemap.xml
