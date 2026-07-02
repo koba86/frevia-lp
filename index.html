@@ -710,6 +710,7 @@ input,select,textarea{font-family:inherit}
 }
 .btn-submit:hover{opacity:.9}
 .modal .note{font-size:.75rem;color:#5c5c72;margin-top:1rem;line-height:1.6}
+.hp-field{position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
 
 /* ===== LEGAL MODAL CONTENT ===== */
 #legalContent h2{font-size:1.25rem;font-weight:700;margin-bottom:1.5rem}
@@ -1180,6 +1181,7 @@ footer .copy{font-size:.72rem;color:#5c5c72}
         <label>自己PR</label>
         <textarea name="pr" placeholder="あなたの好きなことや、配信で挑戦したいことを教えてください"></textarea>
       </div>
+      <div class="form-group hp-field" aria-hidden="true"><label>Website</label><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
       <button type="submit" class="btn-submit">この内容で応募する</button>
       <p class="note">エントリーは完全無料です。個人情報は採用選考の目的にのみ使用します。</p>
     </form>
@@ -1334,12 +1336,35 @@ function openModal(){overlay.classList.add('open');document.body.style.overflow=
 function closeModal(){overlay.classList.remove('open');document.body.style.overflow=''}
 function closeModalOutside(e){if(e.target===overlay)closeModal()}
 
-/* ===== FORM SUBMIT (DEMO) ===== */
-function handleSubmit(e){
+// ===== FORM SUBMIT（frevia-recruit-api へ送信） =====
+const APPLY_API_URL='https://recruit-api.frevia-agency.jp/api/apply';
+async function handleSubmit(e){
   e.preventDefault();
-  alert('ご応募ありがとうございます！\n担当者（info@frevia-agency.jp）より追ってご連絡いたします。');
-  closeModal();
-  e.target.reset();
+  const form=e.target;
+  const btn=form.querySelector('.btn-submit');
+  const originalLabel=btn.textContent;
+  btn.disabled=true;
+  btn.textContent='送信中…';
+  const payload=Object.fromEntries(new FormData(form).entries());
+  let sent=false,serverMsg='';
+  try{
+    const ctrl=new AbortController();
+    const timer=setTimeout(()=>ctrl.abort(),15000);
+    const res=await fetch(APPLY_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:ctrl.signal});
+    clearTimeout(timer);
+    const data=await res.json().catch(()=>null);
+    if(res.ok&&data&&data.ok){sent=true;}
+    else if(data&&data.error){serverMsg=data.error;}
+  }catch(err){/* 通信失敗・タイムアウト */}
+  btn.disabled=false;
+  btn.textContent=originalLabel;
+  if(sent){
+    alert('ご応募ありがとうございます！\n担当者（info@frevia-agency.jp）より追ってご連絡いたします。');
+    closeModal();
+    form.reset();
+  }else{
+    alert((serverMsg?serverMsg+'\n\n':'')+'送信できませんでした。お手数ですが、info@frevia-agency.jp へ直接メールでご応募ください。\n（入力いただいた内容はこの画面に残っています）');
+  }
 }
 </script>
 </body>
