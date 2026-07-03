@@ -1,0 +1,9 @@
+# OS
+.DS_Store
+
+# 依存・ログ（将来の保険）
+node_modules/
+*.log
+
+# 環境変数・秘密（将来の保険）
+.env*
